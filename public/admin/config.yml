@@ -1,20 +1,20 @@
 # =============================================================================
 # GENERATED FILE — do not edit. Run `node scripts/switch-cms.mjs` to regenerate.
-# Active backend: local   (set CMS_BACKEND in .env to change)
+# Active backend: netlify   (set CMS_BACKEND in .env to change)
 # Edit FIELDS in public/admin/_config.body.yml; edit BACKENDS in public/admin/backends/.
 # =============================================================================
 
-# --- BACKEND: local (dev only) -----------------------------------------------
-# Edit at http://localhost:4321/admin with NO auth.
-#   1. npx decap-server     (local Git proxy on :8081)
-#   2. pnpm dev
-# Decap auto-detects the proxy and writes straight to your local files.
-# `name: github` here is just a placeholder; local_backend makes it use the proxy.
+# --- BACKEND: netlify (Netlify Identity + Git Gateway) -----------------------
+# Production auth for sites hosted on Netlify. Client logs in with an emailed
+# invite (no GitHub account needed). Requires, in the Netlify dashboard:
+#   Identity -> Enable  ->  Registration: Invite only
+#   Identity -> Services -> Enable Git Gateway
+#   Identity -> Invite users -> client email
+# Also keep the Netlify Identity widget in src/layouts/BaseLayout.astro.
+# Only works on the DEPLOYED Netlify site (not local).
 backend:
-  name: github
-  repo: ahsan-munir/astro7-starter
+  name: git-gateway
   branch: main
-local_backend: true
 
 # --- SHARED BODY (fields) ----------------------------------------------------
 # This file is concatenated AFTER a backend header by scripts/switch-cms.mjs to
