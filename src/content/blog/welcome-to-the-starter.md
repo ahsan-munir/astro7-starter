@@ -1,12 +1,18 @@
 ---
-title: "Welcome to the AMBI Astro Starter"
-description: "How content works in this starter: pure Astro Markdown, edited in Git, with SEO and schema baked in by construction."
+title: Welcome to the AMBI Astro Starter
+description: "How content works in this starter: pure Astro Markdown, edited in
+  Git, with SEO and schema baked in by construction."
 pubDate: 2026-06-24
-author: "Ahsan"
-tags: ["starter", "astro", "workflow"]
+cover: /src/assets/uploads/screenshot_24-6-2026_133555_www.gulahmedshop.com.jpeg
+author: Ahsan
+tags:
+  - starter
+  - astro
+  - workflow
 draft: false
 seo:
-  description: "A walkthrough of the no-CMS content model in the AMBI Astro starter — Markdown content collections, type-safe schemas, and automatic SEO."
+  description: A walkthrough of the no-CMS content model in the AMBI Astro starter
+    — Markdown content collections, type-safe schemas, and automatic SEO.
 ---
 
 This starter ships with the **no-CMS content model**: every piece of text lives as

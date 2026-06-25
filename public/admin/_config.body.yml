@@ -1,0 +1,76 @@
+# --- SHARED BODY (fields) ----------------------------------------------------
+# This file is concatenated AFTER a backend header by scripts/switch-cms.mjs to
+# produce public/admin/config.yml. Edit fields HERE only — never in config.yml
+# directly (it's generated and overwritten).
+#
+# Fields MIRROR the Zod schema in src/content.config.ts. Change one, change both,
+# or the CMS can save front-matter that fails `astro check` at build time.
+# -----------------------------------------------------------------------------
+
+# Where uploaded images go, and the public URL Decap rewrites them to.
+media_folder: "src/assets/uploads"
+public_folder: "/src/assets/uploads"
+
+collections:
+  # ---------------------------------------------------------------------------
+  # pages — one entry per editable route (home, about, ...)
+  # Schema: title, description, seo?, draft(default false)
+  # ---------------------------------------------------------------------------
+  - name: "pages"
+    label: "Pages"
+    folder: "src/content/pages"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Title", widget: "string" }
+      - { name: "description", label: "Description", widget: "text" }
+      - name: "seo"
+        label: "SEO"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { name: "title", label: "SEO title", widget: "string", required: false, hint: "Falls back to the page Title if empty." }
+          - { name: "description", label: "SEO description", widget: "text", required: false, pattern: ['^.{0,170}$', "Keep under 170 characters."] }
+          - { name: "ogImage", label: "OG image", widget: "image", required: false, hint: "1200x630 social share image." }
+          - { name: "noindex", label: "Hide from search (noindex)", widget: "boolean", required: false, default: false }
+          - { name: "canonical", label: "Canonical URL", widget: "string", required: false }
+      - { name: "draft", label: "Draft (hide from site)", widget: "boolean", default: false }
+      - { name: "body", label: "Body", widget: "markdown", required: false }
+
+  # ---------------------------------------------------------------------------
+  # blog — articles → BlogPosting schema + /blog/[slug]
+  # Schema: title, description, pubDate, updatedDate?, cover?, coverAlt(""),
+  #         author("Ahsan"), tags([]), draft(false), seo?
+  # ---------------------------------------------------------------------------
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
+    extension: "md"
+    format: "frontmatter"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: "title", label: "Title", widget: "string" }
+      - { name: "description", label: "Description", widget: "text" }
+      - { name: "pubDate", label: "Published date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true }
+      - { name: "updatedDate", label: "Updated date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
+      - { name: "cover", label: "Cover image", widget: "image", required: false, hint: "Optimized automatically by Astro." }
+      - { name: "coverAlt", label: "Cover alt text", widget: "string", required: false, default: "" }
+      - { name: "author", label: "Author", widget: "string", default: "Ahsan" }
+      - { name: "tags", label: "Tags", widget: "list", required: false, default: [] }
+      - { name: "draft", label: "Draft (hide from site)", widget: "boolean", default: false }
+      - name: "seo"
+        label: "SEO"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - { name: "title", label: "SEO title", widget: "string", required: false, hint: "Falls back to the post Title if empty." }
+          - { name: "description", label: "SEO description", widget: "text", required: false, pattern: ['^.{0,170}$', "Keep under 170 characters."] }
+          - { name: "ogImage", label: "OG image", widget: "image", required: false, hint: "1200x630 social share image." }
+          - { name: "noindex", label: "Hide from search (noindex)", widget: "boolean", required: false, default: false }
+          - { name: "canonical", label: "Canonical URL", widget: "string", required: false }
+      - { name: "body", label: "Body", widget: "markdown" }

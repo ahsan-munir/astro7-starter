@@ -1,0 +1,12 @@
+# --- BACKEND: github (GitHub OAuth) ------------------------------------------
+# Production auth that works on ANY host (Vercel, Cloudflare Pages, Netlify...).
+# Client logs in with a GitHub account and must be a repo collaborator.
+# Requires a deployed OAuth proxy (deploy once, reuse): set base_url to it.
+#   - Cloudflare Workers proxy: github.com/sterlingwes/decap-proxy
+#   - or a Netlify/Vercel function proxy
+# See README-decap.md for the full proxy + OAuth-app steps.
+backend:
+  name: github
+  repo: ahsan-munir/astro7-starter
+  branch: main
+  # base_url: https://your-oauth-proxy.example.com   # uncomment + set after deploying the proxy

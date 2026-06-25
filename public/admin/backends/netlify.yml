@@ -1,0 +1,11 @@
+# --- BACKEND: netlify (Netlify Identity + Git Gateway) -----------------------
+# Production auth for sites hosted on Netlify. Client logs in with an emailed
+# invite (no GitHub account needed). Requires, in the Netlify dashboard:
+#   Identity -> Enable  ->  Registration: Invite only
+#   Identity -> Services -> Enable Git Gateway
+#   Identity -> Invite users -> client email
+# Also keep the Netlify Identity widget in src/layouts/BaseLayout.astro.
+# Only works on the DEPLOYED Netlify site (not local).
+backend:
+  name: git-gateway
+  branch: main

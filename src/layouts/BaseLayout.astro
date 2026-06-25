@@ -61,5 +61,24 @@ const orgSchema = organizationSchema(Astro.site ?? Astro.url.origin);
       <slot />
     </main>
     <Footer />
+
+    {/*
+      Netlify Identity widget — ONLY needed for the git-gateway (Netlify Identity)
+      CMS backend. It intercepts the invite/confirmation links Netlify emails
+      (yoursite.com/#invite_token=…) and redirects new users into /admin.
+      Remove this block if the project uses GitHub OAuth or no CMS auth.
+    */}
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script is:inline>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", (user) => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
   </body>
 </html>

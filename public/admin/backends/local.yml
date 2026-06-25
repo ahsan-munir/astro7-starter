@@ -1,0 +1,11 @@
+# --- BACKEND: local (dev only) -----------------------------------------------
+# Edit at http://localhost:4321/admin with NO auth.
+#   1. npx decap-server     (local Git proxy on :8081)
+#   2. pnpm dev
+# Decap auto-detects the proxy and writes straight to your local files.
+# `name: github` here is just a placeholder; local_backend makes it use the proxy.
+backend:
+  name: github
+  repo: ahsan-munir/astro7-starter
+  branch: main
+local_backend: true

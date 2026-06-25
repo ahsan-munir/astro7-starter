@@ -12,6 +12,12 @@ export default defineConfig({
   site: SITE,
   // Trailing-slash policy kept consistent site-wide (seo-standard §4).
   trailingSlash: "never",
+  // Decap CMS lives at public/admin/index.html. With trailingSlash:"never" the
+  // bare /admin path 404s, so redirect it to the served file. (Admin is noindex
+  // and already excluded from the sitemap below.)
+  redirects: {
+    "/admin": "/admin/index.html",
+  },
   build: {
     // Cleaner URLs: /about instead of /about/index.html
     format: "file",
