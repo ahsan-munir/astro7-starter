@@ -1,0 +1,75 @@
+---
+/**
+ * <SEO> — all per-page <head> SEO, emitted by construction. (seo-standard §1, §5)
+ * Renders: title template, canonical (self-referencing), meta description,
+ * robots meta, Open Graph + Twitter cards, theme-color, favicons, manifest.
+ * Every page gets this via BaseLayout — no per-project hand-editing.
+ */
+import { siteConfig } from "@lib/site";
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Override canonical; defaults to the current URL (self-referencing). */
+  canonical?: string;
+  /** OG image path/URL; defaults to siteConfig.defaultOgImage. */
+  ogImage?: string;
+  /** "website" (default) or "article" for blog posts. */
+  ogType?: "website" | "article";
+  noindex?: boolean;
+  /** Suppress the "| Brand" suffix (e.g. the home page). */
+  bareTitle?: boolean;
+}
+
+const {
+  title,
+  description = siteConfig.defaultDescription,
+  canonical,
+  ogImage = siteConfig.defaultOgImage,
+  ogType = "website",
+  noindex = false,
+  bareTitle = false,
+} = Astro.props;
+
+// Title template: "{Page} | {Brand}", ≤ ~60 chars (seo-standard §5).
+const fullTitle = bareTitle ? title : `${title} | ${siteConfig.name}`;
+
+// Self-referencing canonical (seo-standard §1). Normalize the static-build
+// path: drop `index.html` → "/" and a trailing `.html` → extensionless, so the
+// canonical matches the clean URL the host serves (trailingSlash: "never").
+const rawPath = canonical ?? Astro.url.pathname;
+const cleanPath = rawPath
+  .replace(/index\.html$/, "")
+  .replace(/\.html$/, "")
+  .replace(/\/+$/, (m, off: number) => (off === 0 ? "/" : "")) || "/";
+const canonicalURL = new URL(cleanPath, Astro.site).toString();
+const ogImageURL = new URL(ogImage, Astro.site).toString();
+---
+
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalURL} />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+{/* Open Graph */}
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:locale" content={siteConfig.ogLocale} />
+
+{/* Twitter */}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+{siteConfig.twitter && <meta name="twitter:site" content={siteConfig.twitter} />}
+
+{/* Browser UI + icons (seo-standard §5) */}
+<meta name="theme-color" content="#2563eb" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />

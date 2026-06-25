@@ -1,0 +1,105 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/sections/Hero.astro";
+import Trust from "@components/sections/Trust.astro";
+import Problem from "@components/sections/Problem.astro";
+import Services from "@components/sections/Services.astro";
+import Why from "@components/sections/Why.astro";
+import Process from "@components/sections/Process.astro";
+import Work from "@components/sections/Work.astro";
+import Testimonial from "@components/sections/Testimonial.astro";
+import Faq from "@components/sections/Faq.astro";
+import Cta from "@components/sections/Cta.astro";
+import { websiteSchema } from "@lib/schema";
+
+// Editable copy lives in the `pages` content collection (no-CMS model).
+const home = await getEntry("pages", "home");
+const seo = home?.data.seo;
+---
+
+<BaseLayout
+  title={seo?.title ?? "Home"}
+  description={seo?.description}
+  bareTitle
+  schema={websiteSchema(Astro.site ?? Astro.url.origin)}
+>
+  <Hero
+    variant="01"
+    headline="A website that wins you customers — not just compliments."
+    sub="I design and build fast, modern sites for businesses that want their site to actually do a job."
+    primaryCta={{ label: "Book a discovery call", href: "/contact" }}
+    secondaryCta={{ label: "See the work", href: "#work" }}
+    trustLine="Free discovery call · no obligation."
+  />
+
+  <Trust
+    items={["12 sites launched", "5-star reviews", "Built mobile-first", "Lighthouse 95+"]}
+    caption="Trusted by independent businesses and experts."
+  />
+
+  <Problem
+    headline="Most websites look fine and do nothing."
+    body="Slow, dated, hard to update — visitors leave without acting. You don't need 'a website'; you need one that converts."
+  />
+
+  <Services
+    intro="Everything you need to launch a site that works — handled end to end."
+    cards={[
+      { name: "Web Design", benefit: "Conversion-focused design that reflects your brand.", href: "/services#design" },
+      { name: "Web Development", benefit: "Fast, accessible, SEO-ready builds in Astro.", href: "/services#development" },
+      { name: "Launch & Support", benefit: "Smooth launch, handover, and ongoing care.", href: "/services#support" },
+    ]}
+  />
+
+  <Why
+    headline="Why work with me"
+    differentiators={[
+      { title: "You work with me, not a faceless team.", body: "One expert, end to end — design through launch." },
+      { title: "A proven, documented process.", body: "No guesswork. You always know the next step." },
+      { title: "Built to convert, not just to look nice.", body: "Every section earns its place toward your goal." },
+      { title: "No surprises — fixed scope and price.", body: "Clear quote up front; no creeping costs." },
+    ]}
+  />
+
+  <Process
+    headline="A clear, calm path from idea to launch"
+    steps={[
+      { label: "Discovery call", body: "We map your goals and audience." },
+      { label: "Strategy & design", body: "Sitemap, copy direction, and visual design." },
+      { label: "Development", body: "Fast, accessible build to the locked standard." },
+      { label: "Launch & handover", body: "Go live, then it's yours to own." },
+    ]}
+  />
+
+  <div id="work">
+    <Work
+      intro="Outcomes, not just visuals."
+      cases={[
+        { client: "Northside Dental", result: "Redesign — +40% enquiries in 3 months.", href: "#" },
+        { client: "Lumen Coaching", result: "New site — page speed cut from 6s to 1.2s.", href: "#" },
+        { client: "Atlas Joinery", result: "Rebuild — #1 local ranking for core service.", href: "#" },
+      ]}
+    />
+  </div>
+
+  <Testimonial
+    quotes={[
+      { quote: "Enquiries doubled within the first month. Worth every penny.", name: "Sarah K.", role: "Northside Dental" },
+      { quote: "Calm, clear, and fast. The site finally does its job.", name: "Daniel R.", role: "Lumen Coaching" },
+    ]}
+  />
+
+  <Faq
+    items={[
+      { q: "How much does a website cost?", a: "Most projects fall in a clear fixed-price band agreed up front after a discovery call." },
+      { q: "How long does it take?", a: "Typically 3–5 weeks from kickoff to launch, depending on scope and content readiness." },
+      { q: "Can I edit it myself?", a: "Yes — content is structured so it's easy to update, and I can add a simple editor if you want one." },
+    ]}
+  />
+
+  <Cta
+    headline="Ready for a website that pulls its weight?"
+    button={{ label: "Book a discovery call", href: "/contact" }}
+  />
+</BaseLayout>

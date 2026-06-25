@@ -1,0 +1,58 @@
+/* =============================================================================
+   DESIGN TOKENS — the theme. (dev-architecture §7)
+   Rebrand = swap the values in this one file → every section reskins.
+   These are raw CSS variables; tailwind.css maps them into Tailwind's @theme so
+   components use semantic classes (bg-primary, text-heading) — never raw hex.
+   ============================================================================= */
+:root {
+  /* --- Color: brand --- */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-contrast: #ffffff;
+
+  --color-accent: #f59e0b;
+
+  /* --- Color: surfaces & text --- */
+  --color-bg: #ffffff;
+  --color-bg-muted: #f8fafc;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+
+  --color-heading: #0f172a;
+  --color-body: #334155;
+  --color-muted: #64748b;
+  --color-inverse: #f8fafc;
+
+  /* --- Color: states --- */
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+
+  /* --- Typography --- */
+  --font-heading: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* --- Spacing scale --- */
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+
+  /* --- Radius --- */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  /* --- Shadows --- */
+  --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
+  --shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.1);
+  --shadow-lg: 0 12px 32px -8px rgb(15 23 42 / 0.18);
+
+  /* --- Layout --- */
+  --container-max: 72rem;
+
+  /* Browser UI theming (seo-standard §5) */
+  --theme-color: var(--color-primary);
+}

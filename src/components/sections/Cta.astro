@@ -1,0 +1,22 @@
+---
+/** CTA — one clear next step for everyone who scrolled this far. (gallery CTA.01) */
+interface Props {
+  headline: string;
+  button: { label: string; href: string };
+}
+const { headline, button } = Astro.props;
+---
+
+<section class="bg-primary text-primary-contrast">
+  <div
+    class="container-page flex flex-col items-center gap-6 py-16 text-center"
+  >
+    <h2 class="max-w-2xl text-3xl font-bold">{headline}</h2>
+    <a
+      href={button.href}
+      class="inline-flex items-center justify-center rounded-md bg-primary-contrast px-6 py-3 text-sm font-semibold text-primary transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-contrast"
+    >
+      {button.label}
+    </a>
+  </div>
+</section>

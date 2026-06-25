@@ -1,0 +1,55 @@
+---
+import { getEntry } from "astro:content";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/ui/Breadcrumbs.astro";
+import Cta from "@components/sections/Cta.astro";
+import { personSchema, breadcrumbSchema } from "@lib/schema";
+import { siteConfig } from "@lib/site";
+
+const about = await getEntry("pages", "about");
+const seo = about?.data.seo;
+const site = Astro.site ?? Astro.url.origin;
+
+const schema = [
+  personSchema(site),
+  breadcrumbSchema(
+    [
+      { name: "Home", href: "/" },
+      { name: "About", href: "/about" },
+    ],
+    site,
+  ),
+];
+---
+
+<BaseLayout title="About" description={seo?.description} schema={schema}>
+  <Breadcrumbs
+    items={[
+      { name: "Home", href: "/" },
+      { name: "About", href: "/about" },
+    ]}
+  />
+
+  <section class="section-pad">
+    <div class="container-page mx-auto max-w-2xl">
+      <h1 class="text-4xl font-bold tracking-tight">
+        The named expert behind your website
+      </h1>
+      <p class="mt-6 text-lg text-body">
+        I'm {siteConfig.person.name}, a {siteConfig.person.jobTitle.toLowerCase()} who
+        builds fast, conversion-focused websites end to end — design, development, and
+        launch — using a proven, documented process.
+      </p>
+      <p class="mt-4 text-body">
+        No faceless team, no surprises. You work directly with the person building your
+        site, and you walk away owning a real asset: the code, the hosting, and the
+        content.
+      </p>
+    </div>
+  </section>
+
+  <Cta
+    headline="Let's build something that works."
+    button={{ label: "Book a discovery call", href: "/contact" }}
+  />
+</BaseLayout>

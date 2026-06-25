@@ -1,0 +1,21 @@
+---
+/**
+ * Serializes one or more schema objects into a JSON-LD script tag.
+ * (seo-standard §2 — schema is emitted by components, validated before launch.)
+ */
+interface Props {
+  schema: Record<string, unknown> | Record<string, unknown>[];
+}
+const { schema } = Astro.props;
+const payload = Array.isArray(schema) ? schema : [schema];
+---
+
+{
+  payload.map((item) => (
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(item)}
+    />
+  ))
+}

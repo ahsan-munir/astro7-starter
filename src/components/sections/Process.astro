@@ -1,0 +1,29 @@
+---
+/** PROCESS — reduce perceived risk with a clear path. (gallery PROCESS.01) */
+import Section from "@components/ui/Section.astro";
+
+interface Props {
+  headline: string;
+  steps: { label: string; body: string }[]; // 3–5
+}
+const { headline, steps } = Astro.props;
+---
+
+<Section>
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-3xl font-bold">{headline}</h2>
+  </div>
+  <ol class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      steps.map((step, i) => (
+        <li class="relative">
+          <span class="font-heading text-3xl font-bold text-primary/30">
+            {String(i + 1).padStart(2, "0")}
+          </span>
+          <h3 class="mt-2 font-semibold text-heading">{step.label}</h3>
+          <p class="mt-1 text-sm text-body">{step.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Section>

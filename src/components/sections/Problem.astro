@@ -1,0 +1,17 @@
+---
+/** PROBLEM — name the pain; make them feel seen. (gallery PROBLEM.01) */
+import Section from "@components/ui/Section.astro";
+
+interface Props {
+  headline: string;
+  body: string;
+}
+const { headline, body } = Astro.props;
+---
+
+<Section>
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-3xl font-bold">{headline}</h2>
+    <p class="mt-5 text-lg text-body">{body}</p>
+  </div>
+</Section>

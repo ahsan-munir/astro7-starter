@@ -1,0 +1,20 @@
+---
+/** Section wrapper — consistent vertical rhythm + optional muted/inverse surface. */
+interface Props {
+  surface?: "default" | "muted" | "inverse";
+  id?: string;
+  class?: string;
+}
+const { surface = "default", id, class: className = "" } = Astro.props;
+const surfaces = {
+  default: "bg-bg",
+  muted: "bg-bg-muted",
+  inverse: "bg-heading text-inverse",
+};
+---
+
+<section id={id} class:list={["section-pad", surfaces[surface], className]}>
+  <div class="container-page">
+    <slot />
+  </div>
+</section>

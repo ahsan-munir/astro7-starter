@@ -1,0 +1,94 @@
+---
+/**
+ * CONTACT — make starting a conversation effortless. (gallery CONTACT.01)
+ * Form left, direct methods right. Form posts to a configurable action
+ * (e.g. Netlify Forms / Formspree) — set `action` per project.
+ */
+import Section from "@components/ui/Section.astro";
+
+interface DirectMethod {
+  label: string;
+  value: string;
+  href: string;
+}
+interface Props {
+  intro: string;
+  /** Form POST target. Empty = inert demo form. */
+  action?: string;
+  directMethods?: DirectMethod[];
+  buttonLabel?: string;
+}
+const {
+  intro,
+  action = "",
+  directMethods = [],
+  buttonLabel = "Send enquiry",
+} = Astro.props;
+---
+
+<Section id="contact">
+  <div class="grid gap-12 lg:grid-cols-2">
+    <div>
+      <h2 class="text-3xl font-bold">Get in touch</h2>
+      <p class="mt-4 text-body">{intro}</p>
+
+      {
+        directMethods.length > 0 && (
+          <ul class="mt-8 space-y-3">
+            {directMethods.map((m) => (
+              <li class="text-sm">
+                <span class="font-semibold text-heading">{m.label}: </span>
+                <a href={m.href} class="text-primary hover:underline">
+                  {m.value}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+
+    <form
+      method="POST"
+      action={action || undefined}
+      class="space-y-4 rounded-lg border border-border bg-surface p-6 shadow-sm"
+    >
+      <div>
+        <label for="name" class="block text-sm font-medium text-heading">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          class="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm focus-visible:border-primary focus-visible:outline-none"
+        />
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-heading">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          class="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm focus-visible:border-primary focus-visible:outline-none"
+        />
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-medium text-heading">Message</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="4"
+          required
+          class="mt-1 w-full rounded-md border border-border px-3 py-2 text-sm focus-visible:border-primary focus-visible:outline-none"
+        />
+      </div>
+      <button
+        type="submit"
+        class="w-full rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-contrast transition-colors hover:bg-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      >
+        {buttonLabel}
+      </button>
+    </form>
+  </div>
+</Section>

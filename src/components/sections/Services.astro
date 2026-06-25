@@ -1,0 +1,51 @@
+---
+/**
+ * SERVICES — show the range at a glance and route to detail. (gallery SERVICES.01)
+ * Emits Service schema (seo-standard §2).
+ */
+import Section from "@components/ui/Section.astro";
+import JsonLd from "@components/seo/JsonLd.astro";
+import { serviceSchema } from "@lib/schema";
+
+interface ServiceCard {
+  name: string;
+  benefit: string;
+  href: string;
+}
+interface Props {
+  intro: string;
+  cards: ServiceCard[]; // 3–4
+  emitSchema?: boolean;
+}
+const { intro, cards, emitSchema = true } = Astro.props;
+const schema = emitSchema
+  ? serviceSchema(
+      cards.map((c) => ({ name: c.name, description: c.benefit })),
+      Astro.site ?? Astro.url.origin,
+    )
+  : null;
+---
+
+<Section id="services">
+  <div class="mx-auto max-w-2xl text-center">
+    <p class="text-lg text-body">{intro}</p>
+  </div>
+  <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      cards.map((card) => (
+        <a
+          href={card.href}
+          class="group rounded-lg border border-border bg-surface p-6 shadow-sm transition-shadow hover:shadow-md"
+        >
+          <h3 class="text-lg font-semibold text-heading">{card.name}</h3>
+          <p class="mt-2 text-sm text-body">{card.benefit}</p>
+          <span class="mt-4 inline-block text-sm font-medium text-primary">
+            Learn more &rarr;
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</Section>
+
+{schema && <JsonLd schema={schema} />}

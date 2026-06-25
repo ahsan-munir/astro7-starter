@@ -1,0 +1,22 @@
+---
+/** Shared CTA primitive. The button's JOB is fixed; wording comes from props. */
+interface Props {
+  href: string;
+  variant?: "primary" | "secondary";
+  class?: string;
+}
+const { href, variant = "primary", class: className = "" } = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
+const variants = {
+  primary:
+    "bg-primary text-primary-contrast hover:bg-primary-hover focus-visible:outline-primary",
+  secondary:
+    "border border-border bg-surface text-heading hover:border-primary hover:text-primary",
+};
+---
+
+<a href={href} class:list={[base, variants[variant], className]}>
+  <slot />
+</a>

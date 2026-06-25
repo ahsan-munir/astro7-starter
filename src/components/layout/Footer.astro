@@ -1,0 +1,33 @@
+---
+import { siteConfig } from "@lib/site";
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border bg-bg-muted">
+  <div
+    class="container-page flex flex-col items-center justify-between gap-4 py-10 sm:flex-row"
+  >
+    <p class="text-sm text-muted">
+      &copy; {year} {siteConfig.name}. All rights reserved.
+    </p>
+
+    {
+      siteConfig.sameAs.length > 0 && (
+        <ul class="flex gap-5 text-sm">
+          {siteConfig.sameAs.map((href) => (
+            <li>
+              <a
+                href={href}
+                class="text-muted transition-colors hover:text-primary"
+                rel="me noopener"
+                target="_blank"
+              >
+                {new URL(href).hostname.replace("www.", "")}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</footer>

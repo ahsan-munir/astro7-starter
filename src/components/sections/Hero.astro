@@ -1,0 +1,100 @@
+---
+/**
+ * HERO — Hook the right visitor and state the outcome in ~5s. (gallery HERO)
+ * Slots (LOCKED): headline · sub · primary CTA · secondary CTA (opt) · visual.
+ * Variants: "01" centered outcome-led · "02" split text/image.
+ */
+import { Image } from "astro:assets";
+import Button from "@components/ui/Button.astro";
+
+export type HeroVariant = "01" | "02";
+
+interface Props {
+  variant?: HeroVariant;
+  headline: string;
+  sub: string;
+  primaryCta: { label: string; href: string };
+  secondaryCta?: { label: string; href: string };
+  trustLine?: string;
+  /** Imported image asset (astro:assets) — optimized + explicit dimensions. */
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+const {
+  variant = "01",
+  headline,
+  sub,
+  primaryCta,
+  secondaryCta,
+  trustLine,
+  image,
+  imageAlt = "",
+} = Astro.props;
+---
+
+{
+  variant === "01" && (
+    <section class="bg-bg section-pad">
+      <div class="container-page mx-auto max-w-3xl text-center">
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">{headline}</h1>
+        <p class="mt-6 text-lg text-body">{sub}</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <Button href={primaryCta.href}>{primaryCta.label}</Button>
+          {secondaryCta && (
+            <Button href={secondaryCta.href} variant="secondary">
+              {secondaryCta.label}
+            </Button>
+          )}
+        </div>
+        {trustLine && <p class="mt-4 text-sm text-muted">{trustLine}</p>}
+        {image && (
+          <div class="mt-12">
+            <Image
+              src={image}
+              alt={imageAlt}
+              widths={[480, 768, 1024]}
+              sizes="(max-width: 768px) 100vw, 768px"
+              loading="eager"
+              fetchpriority="high"
+              class="mx-auto rounded-lg shadow-lg"
+            />
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+{
+  variant === "02" && (
+    <section class="bg-bg section-pad">
+      <div class="container-page grid items-center gap-12 lg:grid-cols-2">
+        <div>
+          <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">{headline}</h1>
+          <p class="mt-6 text-lg text-body">{sub}</p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <Button href={primaryCta.href}>{primaryCta.label}</Button>
+            {secondaryCta && (
+              <Button href={secondaryCta.href} variant="secondary">
+                {secondaryCta.label}
+              </Button>
+            )}
+          </div>
+          {trustLine && <p class="mt-4 text-sm text-muted">{trustLine}</p>}
+        </div>
+        {image && (
+          <Image
+            src={image}
+            alt={imageAlt}
+            widths={[480, 768, 1024]}
+            sizes="(max-width: 1024px) 100vw, 512px"
+            loading="eager"
+            fetchpriority="high"
+            class="rounded-lg shadow-lg"
+          />
+        )}
+      </div>
+    </section>
+  )
+}

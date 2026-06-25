@@ -1,0 +1,35 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/ui/Breadcrumbs.astro";
+import Contact from "@components/sections/Contact.astro";
+import { breadcrumbSchema } from "@lib/schema";
+
+const site = Astro.site ?? Astro.url.origin;
+---
+
+<BaseLayout
+  title="Contact"
+  description="Tell me about your project — I'll reply within one working day."
+  schema={breadcrumbSchema(
+    [
+      { name: "Home", href: "/" },
+      { name: "Contact", href: "/contact" },
+    ],
+    site,
+  )}
+>
+  <Breadcrumbs
+    items={[
+      { name: "Home", href: "/" },
+      { name: "Contact", href: "/contact" },
+    ]}
+  />
+
+  <Contact
+    intro="Tell me about your project. I'll reply within one working day."
+    directMethods={[
+      { label: "Email", value: "hello@example.com", href: "mailto:hello@example.com" },
+      { label: "Book a call", value: "Pick a time", href: "#" },
+    ]}
+  />
+</BaseLayout>

@@ -1,0 +1,47 @@
+---
+/**
+ * TESTIMONIAL — social proof. (gallery TESTIMONIAL.01)
+ * Review schema is emitted ONLY for real, verifiable reviews (seo-standard §2).
+ */
+import Section from "@components/ui/Section.astro";
+import JsonLd from "@components/seo/JsonLd.astro";
+
+interface Quote {
+  quote: string;
+  name: string;
+  role?: string;
+}
+interface Props {
+  quotes: Quote[]; // 1–3
+  /** Set true only when the quotes are real & verifiable → emits Review schema. */
+  verifiedReviews?: boolean;
+}
+const { quotes, verifiedReviews = false } = Astro.props;
+
+const schema = verifiedReviews
+  ? quotes.map((q) => ({
+      "@context": "https://schema.org",
+      "@type": "Review",
+      reviewBody: q.quote,
+      author: { "@type": "Person", name: q.name },
+    }))
+  : null;
+---
+
+<Section>
+  <div class="mx-auto grid max-w-5xl gap-8 md:grid-cols-2 lg:grid-cols-3">
+    {
+      quotes.map((q) => (
+        <figure class="rounded-lg border border-border bg-surface p-6 shadow-sm">
+          <blockquote class="text-body">&ldquo;{q.quote}&rdquo;</blockquote>
+          <figcaption class="mt-4 text-sm font-semibold text-heading">
+            {q.name}
+            {q.role && <span class="font-normal text-muted"> — {q.role}</span>}
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</Section>
+
+{schema && <JsonLd schema={schema} />}

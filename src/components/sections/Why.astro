@@ -1,0 +1,32 @@
+---
+/** WHY — differentiate vs. the alternatives. (gallery WHY.01) */
+import Section from "@components/ui/Section.astro";
+
+interface Props {
+  headline: string;
+  differentiators: { title: string; body: string }[]; // 3–4
+}
+const { headline, differentiators } = Astro.props;
+---
+
+<Section surface="muted">
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-3xl font-bold">{headline}</h2>
+  </div>
+  <div class="mt-12 grid gap-8 sm:grid-cols-2">
+    {
+      differentiators.map((item) => (
+        <div class="flex gap-4">
+          <span
+            class="mt-1 h-2.5 w-2.5 flex-none rounded-full bg-primary"
+            aria-hidden="true"
+          />
+          <div>
+            <h3 class="font-semibold text-heading">{item.title}</h3>
+            <p class="mt-1 text-sm text-body">{item.body}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Section>

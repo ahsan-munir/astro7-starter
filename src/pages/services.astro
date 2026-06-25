@@ -1,0 +1,71 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Breadcrumbs from "@components/ui/Breadcrumbs.astro";
+import Services from "@components/sections/Services.astro";
+import Process from "@components/sections/Process.astro";
+import Faq from "@components/sections/Faq.astro";
+import Cta from "@components/sections/Cta.astro";
+import { breadcrumbSchema } from "@lib/schema";
+
+const site = Astro.site ?? Astro.url.origin;
+---
+
+<BaseLayout
+  title="Services"
+  description="Web design, development, and launch support — handled end to end by one expert."
+  schema={breadcrumbSchema(
+    [
+      { name: "Home", href: "/" },
+      { name: "Services", href: "/services" },
+    ],
+    site,
+  )}
+>
+  <Breadcrumbs
+    items={[
+      { name: "Home", href: "/" },
+      { name: "Services", href: "/services" },
+    ]}
+  />
+
+  <section class="section-pad pb-0">
+    <div class="container-page mx-auto max-w-2xl text-center">
+      <h1 class="text-4xl font-bold tracking-tight">Services</h1>
+      <p class="mt-4 text-lg text-body">
+        Everything you need to launch a site that works — handled end to end.
+      </p>
+    </div>
+  </section>
+
+  <Services
+    intro="Pick the help you need, or have it all handled."
+    cards={[
+      { name: "Web Design", benefit: "Conversion-focused design that reflects your brand.", href: "#design" },
+      { name: "Web Development", benefit: "Fast, accessible, SEO-ready builds in Astro.", href: "#development" },
+      { name: "Launch & Support", benefit: "Smooth launch, handover, and ongoing care.", href: "#support" },
+    ]}
+  />
+
+  <Process
+    headline="How a project runs"
+    steps={[
+      { label: "Discovery call", body: "We map your goals and audience." },
+      { label: "Strategy & design", body: "Sitemap, copy direction, and visual design." },
+      { label: "Development", body: "Fast, accessible build to the locked standard." },
+      { label: "Launch & handover", body: "Go live, then it's yours to own." },
+    ]}
+  />
+
+  <Faq
+    items={[
+      { q: "Do you offer ongoing support?", a: "Yes — optional care plans cover updates, monitoring, and small changes." },
+      { q: "Can you redesign my existing site?", a: "Absolutely. Redesigns include a redirect map so you keep your search rankings." },
+      { q: "What do I need to provide?", a: "Your goals, brand assets, and content — I'll guide you through exactly what's needed." },
+    ]}
+  />
+
+  <Cta
+    headline="Not sure which you need?"
+    button={{ label: "Book a free discovery call", href: "/contact" }}
+  />
+</BaseLayout>

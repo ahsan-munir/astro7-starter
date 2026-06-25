@@ -1,0 +1,21 @@
+---
+/** TRUST — instant credibility before they read anything. (gallery TRUST.01) */
+import Section from "@components/ui/Section.astro";
+
+interface Props {
+  items: string[]; // proof items: stats | ratings | short claims
+  caption?: string;
+}
+const { items, caption } = Astro.props;
+---
+
+<Section surface="muted" class="!py-10">
+  <ul class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-center">
+    {
+      items.map((item) => (
+        <li class="text-sm font-semibold text-heading">{item}</li>
+      ))
+    }
+  </ul>
+  {caption && <p class="mt-4 text-center text-xs text-muted">{caption}</p>}
+</Section>
