@@ -1,0 +1,12 @@
+# Netlify build settings — pinned so deploys are reproducible.
+# (Without this, Netlify guesses the package manager / Node version.)
+
+[build]
+  command = "pnpm build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 7 requires Node >=22.12 — must match .nvmrc and package.json engines.
+  NODE_VERSION = "22"
+  # Netlify auto-detects pnpm from pnpm-lock.yaml; pin the version to be safe.
+  PNPM_VERSION = "10.30.0"
